@@ -4,6 +4,10 @@ import UserModel from "@/models/user.model";
 import { auth } from "@/auth";
 import { redirect } from "next/navigation";
 import EditRoleMobile from "@/components/EditRoleMobile";
+import Nav from "@/components/Nav"
+import UserDashboard from "@/components/UserDashboard";
+import AdminDashboard from "@/components/AdminDashboard";
+import DeliveryPartnerDashboard from "@/components/DeliveryPartnerDashboard";
 
 async function Home() {
 
@@ -19,10 +23,13 @@ async function Home() {
   if (Incomplete) {
     return <EditRoleMobile />
   }
-
+  const plainUser = JSON.parse(JSON.stringify(user))
   return (
     <div>
-      <h1>Home</h1>
+      <Nav user={plainUser}/>
+      { plainUser.role == "user" ? <UserDashboard /> : 
+      plainUser.role == "admin" ? <AdminDashboard /> : 
+      plainUser.role == "deliveryPartner" ? <DeliveryPartnerDashboard /> : null }
     </div>
   );
 }
