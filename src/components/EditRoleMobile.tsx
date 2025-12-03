@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { User, Truck, ShieldCheck, ArrowRight, Loader2, Phone } from 'lucide-react';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
+import { useSession } from 'next-auth/react';
 
 type Role = 'user' | 'deliveryPartner' | 'admin';
 
@@ -20,6 +21,8 @@ export default function EditRoleMobile() {
         { id: 'user', label: 'User', icon: User },
         { id: 'deliveryPartner', label: 'Delivery Partner', icon: Truck },
     ] as const;
+
+    const { update } = useSession();
 
     const handleSubmit = async () => {
         setError('');
@@ -41,6 +44,7 @@ export default function EditRoleMobile() {
                 role: selectedRole,
                 mobile: mobile
             });
+            await update({ role: selectedRole });
             window.location.reload();
         } catch (err: any) {
             console.error(err);
