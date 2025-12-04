@@ -1,38 +1,31 @@
 import mongoose from "mongoose";
 
 interface IGrocery {
-    id?:mongoose.Types.ObjectId;
+    id?: mongoose.Types.ObjectId;
     name: string;
     category: string;
     price: string;
     unit: string;
     image: string;
     createdAt?: Date;
-    updatedAt?: Date;    
+    updatedAt?: Date;
 }
 const GrocerySchema = new mongoose.Schema<IGrocery>(
     {
         name: {
-            type: String, 
+            type: String,
             required: true,
             trim: true,
             lowercase: true,
             index: true,
             unique: true,
-            sparse: true,
-            validate: {
-                validator: (v: string) => /^\S+$/u.test(v),
-                message: 'Name cannot contain whitespace'
-            }
+            sparse: true
         },
         category: {
-            type: String, 
+            type: String,
             required: true,
             trim: true,
-            lowercase: true,
             index: true,
-            unique: true,
-            sparse: true,
             enum: [
                 "Fruits & Vegetables",
                 "Dairy & Eggs",
@@ -47,43 +40,27 @@ const GrocerySchema = new mongoose.Schema<IGrocery>(
             ],
         },
         price: {
-            type: String, 
+            type: String,
             required: true,
             trim: true,
             lowercase: true,
-            index: true,
-            unique: true,
-            sparse: true,
-            validate: {
-                validator: (v: string) => /^\S+$/u.test(v),
-                message: 'Price cannot contain whitespace'
-            }
+            index: true
         },
         unit: {
-            type: String, 
+            type: String,
             required: true,
             trim: true,
             lowercase: true,
             index: true,
-            unique: true,
-            sparse: true,
-            validate: {
-                validator: (v: string) => /^\S+$/u.test(v),
-                message: 'Unit cannot contain whitespace'
-            }
+            enum: ["kg", "g", "l", "ml", "pcs", "dozen", "pack"]
         },
         image: {
-            type: String, 
+            type: String,
             required: true,
             trim: true,
-            lowercase: true,
             index: true,
             unique: true,
             sparse: true,
-            validate: {
-                validator: (v: string) => /^\S+$/u.test(v),
-                message: 'Image cannot contain whitespace'
-            }
         }
     },
     {
