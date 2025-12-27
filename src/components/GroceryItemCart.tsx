@@ -3,7 +3,11 @@ import React, { useState } from 'react'
 import mongoose from 'mongoose'
 import { motion } from 'motion/react'
 import { ShoppingCart } from 'lucide-react'
-
+import { useDispatch } from 'react-redux'
+import { AppDispatch } from '@/redux/store'
+import { addToCart } from '@/redux/cartSlice'
+import { useSelector } from 'react-redux'
+import { RootState } from '@/redux/store'
 interface IGrocery {
     id?: mongoose.Types.ObjectId;
     name: string;
@@ -16,12 +20,14 @@ interface IGrocery {
 }
 
 function GroceryItemCart({ item }: { item: IGrocery }) {
+    const dispatch = useDispatch<AppDispatch>();
     const [isAdded, setIsAdded] = useState(false);
-
+    const {cartData} = useSelector((state:RootState) => state.cart);
+    const cartItem = cartData.find(i=>i.id == item.id)
     const handleAddToCart = () => {
         setIsAdded(true);
         setTimeout(() => setIsAdded(false), 1500);
-        // TODO: Add actual cart logic here
+        dispatch(addToCart({ ...item, quantity: 1 }));
     };
 
     return (

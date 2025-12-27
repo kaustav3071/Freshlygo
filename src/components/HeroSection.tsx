@@ -3,6 +3,8 @@ import React, { useEffect, useState } from 'react'
 import { Leaf, Truck, Smartphone } from 'lucide-react'
 import { AnimatePresence, motion } from 'framer-motion'
 import Link from 'next/link'
+import { useSelector } from 'react-redux'
+import { RootState } from '@/redux/store'
 
 const HeroSection = () => {
   const slides = [

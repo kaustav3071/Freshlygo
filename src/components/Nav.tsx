@@ -6,6 +6,8 @@ import { usePathname } from 'next/navigation';
 import Image from 'next/image';
 import { motion, AnimatePresence } from "framer-motion";
 import { signOut } from 'next-auth/react';
+import { RootState } from '@/redux/store';
+import { useSelector } from 'react-redux';
 
 interface IUser {
     _id?: string;
@@ -18,6 +20,7 @@ interface IUser {
 }
 
 function Nav({ user }: { user: IUser }) {
+    const {cartData} = useSelector((state:RootState) => state.cart);  
     const [open, setOpen] = useState(false);
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const dropdownRef = useRef<HTMLDivElement>(null);
@@ -92,7 +95,7 @@ function Nav({ user }: { user: IUser }) {
                                 <Link href="/cart">
                                     <ShoppingCart className="text-white h-6 w-6" />
                                     <div className="absolute -top-2 -right-2 bg-orange-500 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center border-2 border-purple-600">
-                                        <span>3</span>
+                                        <span>{cartData.length}</span>
                                     </div>
                                 </Link>
                             </div>
